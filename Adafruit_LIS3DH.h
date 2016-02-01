@@ -25,7 +25,6 @@
 
 #include <Wire.h>
 #include <SPI.h>
-#include <Adafruit_Sensor.h>
 
 /*=========================================================================
     I2C ADDRESS/BITS
@@ -102,7 +101,7 @@ typedef enum
 
 } lis3dh_dataRate_t;
 
-class Adafruit_LIS3DH : public Adafruit_Sensor {
+class Adafruit_LIS3DH {
  public:
   Adafruit_LIS3DH(void);
   Adafruit_LIS3DH(int8_t cspin);
@@ -119,9 +118,6 @@ class Adafruit_LIS3DH : public Adafruit_Sensor {
   void setDataRate(lis3dh_dataRate_t dataRate);
   lis3dh_dataRate_t getDataRate(void);
 
-  bool getEvent(sensors_event_t *event);
-  void getSensor(sensor_t *sensor);
-
   uint8_t getOrientation(void);
 
   void setClick(uint8_t c, uint8_t clickthresh, uint8_t timelimit = 10, uint8_t timelatency = 20, uint8_t timewindow = 255);
@@ -136,10 +132,10 @@ class Adafruit_LIS3DH : public Adafruit_Sensor {
   void writeRegister8(uint8_t reg, uint8_t value);
   uint8_t spixfer(uint8_t x = 0xFF);
 
+  // SPI
+  int8_t _cs, _mosi, _miso, _sck;
 
   int32_t _sensorID;
   int8_t  _i2caddr;
 
-  // SPI
-  int8_t _cs, _mosi, _miso, _sck;
 };

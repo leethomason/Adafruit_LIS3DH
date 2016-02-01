@@ -286,49 +286,6 @@ lis3dh_dataRate_t Adafruit_LIS3DH::getDataRate(void)
 
 /**************************************************************************/
 /*!
-    @brief  Gets the most recent sensor event
-*/
-/**************************************************************************/
-bool Adafruit_LIS3DH::getEvent(sensors_event_t *event) {
-  /* Clear the event */
-  memset(event, 0, sizeof(sensors_event_t));
-
-  event->version   = sizeof(sensors_event_t);
-  event->sensor_id = _sensorID;
-  event->type      = SENSOR_TYPE_ACCELEROMETER;
-  event->timestamp = 0;
-
-  read();
-
-  event->acceleration.x = x_g * SENSORS_GRAVITY_STANDARD;
-  event->acceleration.y = y_g * SENSORS_GRAVITY_STANDARD;
-  event->acceleration.z = z_g * SENSORS_GRAVITY_STANDARD;
-}
-
-/**************************************************************************/
-/*!
-    @brief  Gets the sensor_t data
-*/
-/**************************************************************************/
-void Adafruit_LIS3DH::getSensor(sensor_t *sensor) {
-  /* Clear the sensor_t object */
-  memset(sensor, 0, sizeof(sensor_t));
-
-  /* Insert the sensor name in the fixed length char array */
-  strncpy (sensor->name, "LIS3DH", sizeof(sensor->name) - 1);
-  sensor->name[sizeof(sensor->name)- 1] = 0;
-  sensor->version     = 1;
-  sensor->sensor_id   = _sensorID;
-  sensor->type        = SENSOR_TYPE_ACCELEROMETER;
-  sensor->min_delay   = 0;
-  sensor->max_value   = 0;
-  sensor->min_value   = 0;
-  sensor->resolution  = 0;
-}
-
-
-/**************************************************************************/
-/*!
     @brief  Low level SPI
 */
 /**************************************************************************/
